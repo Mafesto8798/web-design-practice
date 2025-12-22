@@ -1,64 +1,53 @@
+"use client"
 import Image from "next/image";
+import { KeySelector } from "./components/KeySelector";
+import { MusicalKey,Mode,Chord } from "./types/music";
+import {useState} from "react";
+import { scaleData,allKeys,allModes } from "./lib/musicData";
+import { ChordProgression } from "./components/ChordProgression";
+import { ModeSelect } from "./components/ModeSelect";
+import { ScaleNotes } from "./components/ScaleNotes";
+import { ScaleChords } from "./components/ScaleChords";
+
 
 export default function Home() {
+
+  const [selectedKey,setSelectedKey] = useState<MusicalKey>("C");
+  const [selectedMode,setSelectedMode] = useState<Mode>("major")
+  const [progression,setProgression] = useState<Chord[]>([]);
+  
+  const handleKeyChange = (newKey: MusicalKey) => {
+      setSelectedKey(newKey);
+      setProgression([])
+  }
+  
+  const handleModeChange = (newMode: Mode) => {
+      setSelectedMode(newMode);
+      setProgression([]);
+  }
+  
+  const addToProgression = (chord:Chord) => {
+      setProgression([...progression,chord]);
+  }
+  
+  const clearProgression = () => {
+      setProgression([]);
+  }
+  
+  const currentScale = scaleData[`${selectedKey}-${selectedMode}`]
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="flex min-h-screen items-start justify-start font-sans dark:bg-indigo-950">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-10 px-6 bg-amber-100 dark:bg-slate-800 sm:items-start">
+        <h1 className="text-5xl font-extrabold text-center text-slate-700 dark:text-white sm:text-6xl my-4">
+         Music Buddy
+        </h1>
+        <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
+        <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
+        <ScaleNotes currentScale={currentScale} />
+        <ScaleChords currentScale={currentScale} addToProgression={addToProgression}/>
+        <ChordProgression progression={progression} clearProgression={clearProgression}/>
       </main>
     </div>
   );
