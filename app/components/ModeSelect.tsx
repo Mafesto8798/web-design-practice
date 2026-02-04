@@ -9,12 +9,13 @@ type ModeSelectProps = {
 
 export const ModeSelect = ({selectedMode,handleModeChange} : ModeSelectProps) => {
     return(
-      <div className="flex flex-col items-center justify-evenly w-full my-6">
-          <div className="grid grid-cols-2 gap-4 my-4">
-          {allModes?.map((mode,index) => (
-              <ModeButton modeName={mode} key={index} handleClick={handleModeChange} isActive={mode === selectedMode}/>
-          ))}
-          </div>
+      <div className="flex flex-col items-center justify-evenly w-full my-12">
+        <p className="text-2xl font-semibold text-slate-700 dark:text-slate-200">Select Mode</p>
+        <div className="grid grid-cols-2 gap-8 my-12">
+        {allModes?.map((mode,index) => (
+          <ModeButton modeName={mode} key={index} handleClick={handleModeChange} isActive={mode === selectedMode}/>
+        ))}
+        </div>
       </div>
     )
 }

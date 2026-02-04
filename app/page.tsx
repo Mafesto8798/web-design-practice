@@ -9,7 +9,9 @@ import { ChordProgression } from "./components/ChordProgression";
 import { ModeSelect } from "./components/ModeSelect";
 import { ScaleNotes } from "./components/ScaleNotes";
 import { ScaleChords } from "./components/ScaleChords";
-import { SavedProgressions } from "./components/SavedProgressions";
+import Link from "next/link";
+import { HelperBar } from "./components/HelperBar";
+import { Slide, ToastContainer,toast } from "react-toastify";  
 
 
 export default function Home() {
@@ -19,10 +21,14 @@ export default function Home() {
   const [progression,setProgression] = useState<Chord[]>([]);
   const [savedProgressions,setSavedProgressions] = useState<SavedProgression[]>([]);
 
-  useEffect(() => {
-    const loaded = getAllProgressions();
-    setSavedProgressions(loaded)
-  },[])
+  const testToast = ({data} : any) => {
+    return(
+      <div className="text-slate-800">
+        <p>{data.title}</p>
+        <p>{data.text}</p>
+      </div>
+    )
+  }
 
   
   const handleKeyChange = (newKey: MusicalKey) => {
@@ -36,6 +42,7 @@ export default function Home() {
   }
   
   const addToProgression = (chord:Chord) => {
+      toast.info(testToast,{data:{text:`${chord.name} added to progression`},autoClose:1000,icon:false});
       setProgression([...progression,chord]);
   }
   
@@ -43,13 +50,13 @@ export default function Home() {
       setProgression([]);
   }
   
-  const handleDelete = (id:string) => {
-    deleteProgression(id);
-    const updated = getAllProgressions();
-    setSavedProgressions(updated);
-  }
 
   const handleSave = (progression:Chord[],name:string) => {
+    if(progression.length === 0){
+      toast.error(testToast,{data:{title:"Oops!",text:"Cannot save an empty progression"},autoClose:1400,icon:false});
+      return;
+    }
+    toast.success(testToast,{data:{title:"Success!",text:`${name} saved`},autoClose:1600,icon:false});
     saveProgression(progression,name);
     const updated = getAllProgressions();
     setSavedProgressions(updated);
@@ -60,16 +67,15 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-start justify-center font-sans dark:bg-slate-800 ">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-10 px-6 bg-amber-100 dark:bg-slate-800 sm:items-start">
-        <h1 className="w-full text-5xl font-extrabold text-center  text-slate-700 dark:text-white sm:text-6xl my-6">
-         Music Buddy
-        </h1>
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start pb-20 pt-10 px-6 bg-slate-100 dark:bg-slate-800 sm:items-start">
         <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
         <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
         <ScaleNotes currentScale={currentScale} />
         <ScaleChords currentScale={currentScale} addToProgression={addToProgression}/>
         <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave}/>
-        <SavedProgressions savedProgressions={savedProgressions} deleteProgression={handleDelete}/>
+        <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded">View Saved Progressions</Link>
+        <HelperBar selectedKey={selectedKey} selectedMode={selectedMode} progression={progression}/>
+        <ToastContainer />
       </main>
     </div>
   );

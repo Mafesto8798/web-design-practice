@@ -10,7 +10,7 @@ export const KeyButton = ({keyName,handleClick,isActive} : KeyButtonProps) => {
 
     return(
         <>
-            <button className={`w-12 h-12 rounded-full inset-shadow-sm/50 inset-shadow-slate-800  shadow-slate-600  ${isActive ? "shadow-md/100 bg-green-500" : "shadow-md/50 bg-blue-500"} text-slate-200 text-2xl text-shadow-lg`} onClick={() => handleClick(keyName)}>
+            <button className={`w-13 h-13 rounded-lg border-4  ${isActive ? " bg-slate-800 text-slate-200 border-sky-700" : " bg-white-800 text-slate-800 border-slate-800"}  text-2xl font-semibold`} onClick={() => handleClick(keyName)}>
                 {keyName}
             </button>
         </>

@@ -13,8 +13,9 @@ type KeySelectProps = {
 export const KeySelector = ({selectedKey,handleKeyChange} : KeySelectProps) => {
 return(
     <>
-        <div className="flex flex-col items-center justify-evenly w-full my-6">
-            <div className="grid grid-cols-6 gap-4 my-4">
+        <div className="flex flex-col items-center justify-evenly w-full my-12">
+            <p className="text-2xl font-semibold text-slate-700 dark:text-slate-200">Select Key</p>
+            <div className="grid grid-cols-6 gap-4 my-12">
             {allKeys?.map((musicalKey,index) => (
                 <KeyButton keyName={musicalKey} key={index} handleClick={handleKeyChange} isActive={musicalKey === selectedKey}/>
             ))}
