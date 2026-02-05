@@ -15,7 +15,7 @@ return(
     <>
         <div className="flex flex-col items-center justify-evenly w-full my-12">
             <p className="text-2xl font-semibold text-slate-700 dark:text-slate-200">Select Key</p>
-            <div className="grid grid-cols-6 gap-4 my-12">
+            <div className="grid grid-cols-6 gap-4 my-12 lg:grid-cols-12 lg:gap-6">
             {allKeys?.map((musicalKey,index) => (
                 <KeyButton keyName={musicalKey} key={index} handleClick={handleKeyChange} isActive={musicalKey === selectedKey}/>
             ))}

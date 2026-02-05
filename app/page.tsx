@@ -66,14 +66,14 @@ export default function Home() {
 
 
   return (
-    <div className="flex min-h-screen items-start justify-center font-sans dark:bg-slate-800 ">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start pb-20 pt-10 px-6 bg-slate-100 dark:bg-slate-800 sm:items-start">
+    <div className="flex min-h-screen items-start justify-center font-sans  dark:bg-slate-800 ">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-800 ">
         <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
         <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
         <ScaleNotes currentScale={currentScale} />
         <ScaleChords currentScale={currentScale} addToProgression={addToProgression}/>
         <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave}/>
-        <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded">View Saved Progressions</Link>
+        <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded transition-all duration-100 hover:scale-110 active:scale-95">View Saved Progressions</Link>
         <HelperBar selectedKey={selectedKey} selectedMode={selectedMode} progression={progression}/>
         <ToastContainer />
       </main>
