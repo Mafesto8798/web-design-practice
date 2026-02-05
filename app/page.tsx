@@ -67,7 +67,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-start justify-center font-sans  dark:bg-slate-800 ">
-      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-800 ">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-700 ">
         <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
         <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
         <ScaleNotes currentScale={currentScale} />

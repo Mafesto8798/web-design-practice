@@ -11,7 +11,7 @@ export const ScaleNotes = ({currentScale} : ScaleNotesProps) => {
             <p className="font-semibold text-2xl">Notes</p>
             <div className="flex items-center justify-evenly lg:justify-center w-full my-12 px-4 gap-5 lg:gap-20">
                 {currentScale?.notes.map((note,index) => (
-                    <p key={index} className=" flex items-center justify-center rounded-lg   text-slate-800 text-2xl lg:text-4xl font-semibold">{note}</p>
+                    <p key={index} className=" flex items-center justify-center rounded-lg  dark:text-slate-200 text-slate-800 text-2xl lg:text-4xl font-semibold">{note}</p>
                 ))}
             </div>
         </div>
