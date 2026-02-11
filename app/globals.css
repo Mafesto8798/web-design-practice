@@ -12,6 +12,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-fadeIn: fadeIn 0.5s forwards;
+
+  @keyframes fadeIn {
+    from { 
+      opacity: 0 ;
+      transform: translateX(50px);
+    }
+    to { transform: translateX(0);
+      opacity: 1;
+      }
+  }
 }
 
 @media (prefers-color-scheme: dark) {

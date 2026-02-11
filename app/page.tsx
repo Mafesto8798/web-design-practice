@@ -20,6 +20,7 @@ export default function Home() {
   const [selectedMode,setSelectedMode] = useState<Mode>("major")
   const [progression,setProgression] = useState<Chord[]>([]);
   const [savedProgressions,setSavedProgressions] = useState<SavedProgression[]>([]);
+  const [progressionName,setProgressionName] = useState<string>("");
 
   const testToast = ({data} : any) => {
     return(
@@ -28,6 +29,10 @@ export default function Home() {
         <p>{data.text}</p>
       </div>
     )
+  }
+
+  const updateProgressionName = (name:string) => {
+      setProgressionName(name);
   }
 
   
@@ -48,6 +53,7 @@ export default function Home() {
   
   const clearProgression = () => {
       setProgression([]);
+      setProgressionName("");
   }
   
 
@@ -56,24 +62,29 @@ export default function Home() {
       toast.error(testToast,{data:{title:"Oops!",text:"Cannot save an empty progression"},autoClose:1400,icon:false});
       return;
     }
+    if(progressionName.trim() === ""){
+      toast.error(testToast,{data:{title:"Oops!",text:"Please enter a name for your progression"},autoClose:1400,icon:false});
+      return;
+    }
     toast.success(testToast,{data:{title:"Success!",text:`${name} saved`},autoClose:1600,icon:false});
     saveProgression(progression,name);
     const updated = getAllProgressions();
     setSavedProgressions(updated);
+    clearProgression();
   }
 
   const currentScale = scaleData[`${selectedKey}-${selectedMode}`]
 
 
   return (
-    <div className="flex min-h-screen items-start justify-center font-sans  dark:bg-slate-800 ">
-      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-700 ">
+    <div className="flex min-h-screen items-start justify-center font-sans bg-slate-700">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-700">
         <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
         <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
         <ScaleNotes currentScale={currentScale} />
         <ScaleChords currentScale={currentScale} addToProgression={addToProgression}/>
-        <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave}/>
-        <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded transition-all duration-100 hover:scale-110 active:scale-95">View Saved Progressions</Link>
+        <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave} progressionName={progressionName} updateProgressionName={updateProgressionName}/>
+        <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded transition-all duration-100 hover:scale-110 active:scale-85 lg:active:scale-95">View Saved Progressions</Link>
         <HelperBar selectedKey={selectedKey} selectedMode={selectedMode} progression={progression}/>
         <ToastContainer />
       </main>
