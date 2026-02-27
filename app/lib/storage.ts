@@ -1,14 +1,16 @@
-import { Chord,SavedProgression } from "../types/music"
+import { Chord,Mode,MusicalKey,SavedProgression } from "../types/music"
 
 
 
-export const saveProgression = (progression: Chord[], name: string) => {
+export const saveProgression = (progression: Chord[], name: string,key: MusicalKey,mode: Mode) => {
     const existing = localStorage.getItem('progressions');
     const progressions: SavedProgression[] = existing ? JSON.parse(existing) : [];
 
     const newProgression: SavedProgression = {
         id: Date.now().toString(),
         name:name,
+        key:key,
+        mode:mode,
         chords: progression,
         createdAt: new Date().toISOString()
     }

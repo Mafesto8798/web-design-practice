@@ -10,10 +10,9 @@ export const SavedProgressions = ({savedProgressions,deleteProgression} : SavedP
 
 
     return(
-        <div className="flex items-center flex-col justify-center w-full text-slate-700 dark:text-slate-200 gap-4 ">
-            <p className="text-2xl">Saved Progressions</p>
+        <div className="flex flex-wrap items-center justify-center w-full text-slate-700 dark:text-slate-200 gap-4 p-4">
             {savedProgressions.map((progression,index) => (
-                <Progression key={index} progression={progression} deleteProgression={deleteProgression} />
+                <Progression key={index} progression={progression} deleteProgression={deleteProgression} canDelete={true} />
             ))}
         </div>
     )

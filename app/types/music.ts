@@ -12,6 +12,8 @@ export type Chord = {
 export type SavedProgression = {
     id:string,
     name:String,
+    key: MusicalKey,
+    mode: Mode,
     chords: Chord[],
     createdAt: string
 }

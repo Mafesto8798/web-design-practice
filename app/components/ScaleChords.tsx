@@ -12,7 +12,7 @@ export const ScaleChords = ({currentScale,addToProgression} : ScaleChordsProps) 
             <p className="font-semibold text-2xl">Chords </p>
             <p className="text-sm">(Click to add)</p>
             <span className="w-3/4 items-center justify-center flex">
-                <hr className="w-3/4 lg:w-1/3 border-slate-200 border-2 "/>
+                <hr className="w-3/4 lg:w-1/3 border-slate-700 dark:border-slate-200 border-2 "/>
             </span>
             <div className="flex flex-wrap items-center justify-around w-full gap-8 my-12 lg:justify-center lg:gap-16  ">
                 {currentScale?.chords.map((chord,index) => (

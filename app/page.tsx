@@ -57,9 +57,12 @@ export default function Home() {
   }
   
 
-  const handleSave = (progression:Chord[],name:string) => {
+  const handleSave = (progression:Chord[],name:string,key:MusicalKey,mode:Mode) => {
     if(progression.length === 0){
       toast.error(testToast,{data:{title:"Oops!",text:"Cannot save an empty progression"},autoClose:1400,icon:false});
+      return;
+    } else if(progression.length === 1){
+      toast.error(testToast,{data:{title:"Hmm!",text:"A progression usually has more than one chord"},autoClose:1400,icon:false});
       return;
     }
     if(progressionName.trim() === ""){
@@ -67,7 +70,7 @@ export default function Home() {
       return;
     }
     toast.success(testToast,{data:{title:"Success!",text:`${name} saved`},autoClose:1600,icon:false});
-    saveProgression(progression,name);
+    saveProgression(progression,name,key,mode);
     const updated = getAllProgressions();
     setSavedProgressions(updated);
     clearProgression();
@@ -78,12 +81,12 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-start justify-center font-sans bg-slate-700">
-      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-300 dark:bg-slate-700">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center pb-30 pt-10 px-5 bg-slate-200 dark:bg-slate-700">
         <KeySelector selectedKey={selectedKey} handleKeyChange={handleKeyChange}/>
         <ModeSelect selectedMode={selectedMode} handleModeChange={handleModeChange}/>
         <ScaleNotes currentScale={currentScale} />
         <ScaleChords currentScale={currentScale} addToProgression={addToProgression}/>
-        <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave} progressionName={progressionName} updateProgressionName={updateProgressionName}/>
+        <ChordProgression progression={progression} clearProgression={clearProgression} saveProgression={handleSave} progressionName={progressionName} updateProgressionName={updateProgressionName} selectedKey={selectedKey} selectedMode={selectedMode}  />
         <Link href="/progressions" className="bg-slate-200 text-slate-800 border-2 border-slate-800 font-bold py-2 px-4 m-4 rounded transition-all duration-100 hover:scale-110 active:scale-85 lg:active:scale-95">View Saved Progressions</Link>
         <HelperBar selectedKey={selectedKey} selectedMode={selectedMode} progression={progression}/>
         <ToastContainer />
